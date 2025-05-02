@@ -1,0 +1,62 @@
+services:
+  geth:
+    image: ethereum/client-go:stable
+    container_name: sepolia-geth
+    command:
+      - --sepolia
+      - --syncmode=snap
+      - --datadir=/data
+      - --http
+      - --http.addr=0.0.0.0
+      - --http.port=8545
+      - --http.api=eth,net,web3,debug
+      - --authrpc.addr=0.0.0.0
+      - --authrpc.port=8551
+      - --authrpc.vhosts=*
+      - --authrpc.jwtsecret=/shared/jwtsecret
+      - --metrics.expensive
+    volumes:
+      - ./execution:/data
+      - ./shared-data/jwtsecret:/shared/jwtsecret:ro
+    ports:
+      - "8545:8545"
+      - "8551:8551"
+      - "30303:30303"
+      - "30303:30303/udp"
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+    networks:
+      - sepolia-net
+
+  prysm:
+    image: gcr.io/prysmaticlabs/prysm/beacon-chain:latest
+    container_name: sepolia-prysm
+    command:
+      - --sepolia
+      - --datadir=/data
+      - --execution-endpoint=http://geth:8551
+      - --jwt-secret=/shared/jwtsecret
+      - --accept-terms-of-use
+      - --http-host=0.0.0.0
+      - --http-port=3500
+      - --http-modules=prysm,eth
+      - --checkpoint-sync-url=https://checkpoint-sync.sepolia.ethpandaops.io
+    volumes:
+      - ./consensus:/data
+      - ./shared-data/jwtsecret:/shared/jwtsecret:ro
+    ports:
+      - "3500:3500"
+      - "13000:13000"
+      - "13000:13000/udp"
+    restart: unless-stopped
+    depends_on:
+      - geth
+    networks:
+      - sepolia-net
+
+networks:
+  sepolia-net:
+    driver: bridge
