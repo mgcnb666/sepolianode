@@ -19,38 +19,35 @@ services:
       - ./execution:/data
       - ./shared-data/jwtsecret:/shared/jwtsecret:ro
     ports:
-      - "8545:8545"
-      - "8551:8551"
-      - "30303:30303"
-      - "30303:30303/udp"
+      - "8545:8545"    # Geth HTTP RPC
+      - "8551:8551"    # Geth Auth RPC
+      - "30303:30303"  # Geth P2P TCP
+      - "30303:30303/udp" # Geth P2P UDP
     restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
     networks:
       - sepolia-net
 
-  prysm:
-    image: gcr.io/prysmaticlabs/prysm/beacon-chain:latest
-    container_name: sepolia-prysm
+  lighthouse:
+    image: sigp/lighthouse:latest # Using the latest stable Lighthouse image
+    container_name: sepolia-lighthouse
     command:
-      - --sepolia
+      - lighthouse
+      - beacon_node
+      - --network=sepolia
       - --datadir=/data
       - --execution-endpoint=http://geth:8551
-      - --jwt-secret=/shared/jwtsecret
-      - --accept-terms-of-use
-      - --http-host=0.0.0.0
-      - --http-port=3500
-      - --http-modules=prysm,eth
-      - --checkpoint-sync-url=https://checkpoint-sync.sepolia.ethpandaops.io
+      - --execution-jwt=/shared/jwtsecret
+      - --http # Enable the HTTP API server
+      - --http-address=0.0.0.0
+      - --http-port=5052 # Standard Lighthouse API port
+      - --checkpoint-sync-url=https://beaconstate-sepolia.chainsafe.io # Reliable checkpoint sync URL
     volumes:
-      - ./consensus:/data
-      - ./shared-data/jwtsecret:/shared/jwtsecret:ro
+      - ./consensus:/data # Mount consensus data volume
+      - ./shared-data/jwtsecret:/shared/jwtsecret:ro # Mount shared JWT secret
     ports:
-      - "3500:3500"
-      - "13000:13000"
-      - "13000:13000/udp"
+      - "5052:5052"    # Lighthouse HTTP API
+      - "9000:9000"    # Lighthouse P2P TCP
+      - "9000:9000/udp" # Lighthouse P2P UDP
     restart: unless-stopped
     depends_on:
       - geth
