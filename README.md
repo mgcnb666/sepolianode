@@ -5,7 +5,7 @@
 vps: https://billing.fiberstate.com/aff.php?aff=261
 
 ## 先决条件
-
+beacon有2个服务一个是prysm和lighthouse docker-compose.yml里的是lighthouse docker-compose.yml2是prysm
 - Ubuntu 操作系统
 - 已安装 Docker 和 Docker Compose
 
