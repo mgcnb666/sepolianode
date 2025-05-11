@@ -2,6 +2,8 @@
 
 本指南介绍如何使用 Docker Compose 在 Ubuntu 上设置一个支持 EIP-4884 的 Sepolia RPC 节点和 Beacon API。
 
+vps: https://billing.fiberstate.com/aff.php?aff=261
+
 ## 先决条件
 
 - Ubuntu 操作系统
