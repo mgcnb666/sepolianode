@@ -2,7 +2,9 @@
 
 本指南介绍如何使用 Docker Compose 在 Ubuntu 上设置一个支持 EIP-4884 的 Sepolia RPC 节点和 Beacon API。
 
-vps: https://billing.fiberstate.com/aff.php?aff=261
+vps: https://billing.fiberstate.com/aff.php?aff=261 不可退款但是比较便宜
+
+https://www.hostkey.com/?a_aid=68212e885e581 按量付费不用可以随时退款
 
 ## 先决条件
 beacon有2个服务一个是prysm和lighthouse docker-compose.yml里的是lighthouse docker-compose.yml2是prysm 自己选择使用哪个 lighthouse 可能需要修改一下检查点
