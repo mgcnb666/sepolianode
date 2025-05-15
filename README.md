@@ -14,7 +14,7 @@ beacon有2个服务一个是prysm和lighthouse docker-compose.yml里的是lighth
  ```bash
  sudo bash -c "$(curl -fsSL https://gist.githubusercontent.com/mgcnb666/ddfbcd60ab0a5a2b9868110e3412491f/raw/sepolia.sh)"
  ```
-  
+## 一键无法安装尝试使用手动安装  
 
 ## 安装 Docker 和 Docker Compose
 
