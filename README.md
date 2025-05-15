@@ -2,7 +2,7 @@
 
 本指南介绍如何使用 Docker Compose 在 Ubuntu 上设置一个支持 EIP-4884 的 Sepolia RPC 节点和 Beacon API。
 
-vps: https://billing.fiberstate.com/aff.php?aff=261 不可退款但是比较便宜订单出现Fraud尝试切换vpn重新下单
+[VPS](https://billing.fiberstate.com/aff.php?aff=261) 不可退款但是比较便宜，订单出现Fraud尝试切换vpn重新下单
 
 https://www.hostkey.com/?a_aid=68212e885e581 按量付费不用可以随时退款
 
